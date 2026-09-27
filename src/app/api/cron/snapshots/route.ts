@@ -4,7 +4,7 @@ import { collectMarketSnapshots } from "@/lib/snapshots/collect";
 
 function authorized(request: Request): boolean {
   const secret = process.env.CRON_SECRET;
-  return process.env.NODE_ENV === "development" || !secret || request.headers.get("authorization") === `Bearer ${secret}`;
+  return process.env.NODE_ENV === "development" || Boolean(secret && request.headers.get("authorization") === `Bearer ${secret}`);
 }
 
 export async function POST(request: Request) {

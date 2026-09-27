@@ -1,10 +1,11 @@
 import { getActiveMarkets } from "@/lib/data/markets";
-import { addSnapshots, getSnapshots } from "@/lib/signals/store";
+import { addSnapshots, getSnapshots, upsertMarkets } from "@/lib/signals/store";
 import { SNAPSHOT_INTERVAL_MS } from "@/lib/signals/thresholds";
 import type { MarketSnapshotRecord } from "@/lib/signals/types";
 
 export async function collectMarketSnapshots(): Promise<{ marketsProcessed: number; snapshotsCreated: number }> {
   const markets = await getActiveMarkets({ limit: 100 });
+  await upsertMarkets(markets);
   const now = Date.now();
   const snapshots: MarketSnapshotRecord[] = [];
 

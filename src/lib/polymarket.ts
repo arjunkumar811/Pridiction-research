@@ -159,6 +159,7 @@ export async function getMarkets(
 
   const response = await fetch(`${API_URL}/markets?${params}`, {
     next: { revalidate: 60 },
+    signal: AbortSignal.timeout(10_000),
   });
 
   if (!response.ok) {
