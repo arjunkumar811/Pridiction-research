@@ -24,6 +24,7 @@ export interface PolymarketMarket {
   closed?: boolean;
   image?: string;
   icon?: string;
+  url?: string;
   clobTokenIds?: string[];
   bestBid?: number;
   bestAsk?: number;
@@ -48,9 +49,13 @@ export interface Market {
   volume24hr: number;
   volume1wk: number;
   volume1mo: number;
+  startDate?: string;
   endDate?: string;
+  active?: boolean;
+  closed?: boolean;
   image?: string;
   icon?: string;
+  url?: string;
   conditionId?: string;
   clobTokenIds: string[];
   bestBid?: number;

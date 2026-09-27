@@ -10,6 +10,7 @@ const API_URL = process.env.POLYMARKET_GAMMA_API_URL ?? DEFAULT_API_URL;
 export interface GetMarketsOptions {
   limit?: number;
   offset?: number;
+  slug?: string;
 }
 
 type RawMarket = Record<string, unknown>;
@@ -96,6 +97,7 @@ function toRawMarket(value: RawMarket): PolymarketMarket | null {
     closed: value.closed === true,
     image: parseString(value.image),
     icon: parseString(value.icon),
+    url: parseString(value.url),
     clobTokenIds: parseArray<unknown>(value.clobTokenIds).filter(
       (token): token is string => typeof token === "string",
     ),
@@ -124,9 +126,13 @@ export function normalizeMarket(market: PolymarketMarket): Market {
     volume24hr: market.volume24hr ?? 0,
     volume1wk: market.volume1wk ?? 0,
     volume1mo: market.volume1mo ?? 0,
+    startDate: market.startDate,
     endDate: market.endDate,
+    active: market.active,
+    closed: market.closed,
     image: market.image,
     icon: market.icon,
+    url: market.url,
     conditionId: market.conditionId,
     clobTokenIds: market.clobTokenIds ?? [],
     bestBid: market.bestBid,
@@ -149,6 +155,7 @@ export async function getMarkets(
     limit: String(limit),
     offset: String(offset),
   });
+  if (options.slug) params.set("slug", options.slug);
 
   const response = await fetch(`${API_URL}/markets?${params}`, {
     next: { revalidate: 60 },
