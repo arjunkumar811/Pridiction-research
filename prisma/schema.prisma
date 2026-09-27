@@ -1,0 +1,50 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Market {
+  id         String           @id
+  slug       String?          @unique
+  question   String
+  category   String?
+  endDate    DateTime?
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  snapshots  MarketSnapshot[]
+  signals    Signal[]
+}
+
+model MarketSnapshot {
+  id         String   @id @default(cuid())
+  marketId   String
+  market     Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  yesPrice   Float?
+  noPrice    Float?
+  volume     Float?
+  liquidity  Float?
+  timestamp  DateTime @default(now())
+
+  @@index([marketId, timestamp])
+}
+
+model Signal {
+  id                  String   @id @default(cuid())
+  marketId            String
+  market              Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  type                String
+  severity            String
+  score               Float
+  probabilityChange   Float?
+  volumeChange        Float?
+  liquidityChange     Float?
+  explanation         String
+  detectedAt          DateTime @default(now())
+
+  @@index([marketId, detectedAt])
+  @@index([score, detectedAt])
+}
