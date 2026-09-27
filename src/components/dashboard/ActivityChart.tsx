@@ -1,0 +1,6 @@
+import type { ActivityPoint } from "@/lib/dashboard/data";
+
+export function ActivityChart({ activity }: { activity: ActivityPoint[] }) {
+  const max = Math.max(...activity.map((point) => point.count), 0);
+  return <section className="rounded-xl border border-[#1B2230] bg-[#0D111A] p-5 sm:p-6"><div className="flex items-center justify-between"><div><h2 className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">Market activity</h2><p className="mt-2 text-sm text-slate-400">Detected signals per hour</p></div><span className="text-xs text-slate-600">Last 24 hours</span></div>{max ? <div className="mt-8 flex h-36 items-end gap-1" role="img" aria-label="Detected signals per hour over the last 24 hours">{activity.map((point) => <div key={point.label} className="group flex h-full flex-1 items-end"><div className="relative w-full rounded-t bg-violet-500/70 transition group-hover:bg-violet-400" style={{ height: `${Math.max(4, (point.count / max) * 100)}%` }} title={`${point.label}: ${point.count} signals`} /></div>)}</div> : <div className="mt-8 flex h-36 items-center justify-center rounded-lg border border-dashed border-[#1B2230] text-center text-xs text-slate-600">Activity chart will appear once sufficient historical data has been collected.</div>}</section>;
+}

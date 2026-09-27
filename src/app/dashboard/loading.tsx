@@ -1,0 +1,3 @@
+export default function Loading() {
+  return <main className="min-h-screen bg-[#080B12] p-6"><div className="mx-auto max-w-7xl space-y-5"><div className="h-24 animate-pulse rounded-xl bg-[#0D111A]" /><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{Array.from({ length: 4 }, (_, index) => <div key={index} className="h-32 animate-pulse rounded-xl bg-[#0D111A]" />)}</div><div className="grid gap-5 lg:grid-cols-2"><div className="h-64 animate-pulse rounded-xl bg-[#0D111A]" /><div className="h-64 animate-pulse rounded-xl bg-[#0D111A]" /></div></div></main>;
+}
