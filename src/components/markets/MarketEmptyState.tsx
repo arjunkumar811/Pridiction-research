@@ -1,0 +1,3 @@
+export function MarketEmptyState({ onClear }: { onClear: () => void }) {
+  return <div className="rounded-xl border border-dashed border-[#1B2230] bg-[#0D111A] px-6 py-16 text-center"><p className="text-lg font-semibold text-white">No markets found</p><p className="mt-2 text-sm text-slate-500">Try changing your search or filters.</p><button type="button" onClick={onClear} className="mt-5 rounded-lg bg-violet-600 px-4 py-2 text-xs font-semibold text-white hover:bg-violet-500">Clear filters</button></div>;
+}

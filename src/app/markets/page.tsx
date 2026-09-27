@@ -1,23 +1,17 @@
-import Link from "next/link";
+import { getActiveMarkets } from "@/lib/data/markets";
+import { MarketExplorer } from "@/components/markets/MarketExplorer";
 
-export default function MarketsPage() {
+export default async function MarketsPage() {
+  const markets = await getActiveMarkets({ limit: 100 });
+
   return (
-    <main className="min-h-screen bg-[#050816] px-6 py-12 text-slate-100">
-      <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-slate-950/70 p-10 shadow-lg ring-1 ring-white/5">
-        <h1 className="text-3xl font-bold text-white sm:text-4xl">Markets</h1>
-
-        <p className="mt-6 text-xl text-slate-300">
-          Prediction markets will appear here.
-        </p>
-
-        <div className="mt-8">
-          <Link
-            href="/signals"
-            className="inline-flex items-center justify-center rounded-full border border-violet-400/50 bg-violet-500/10 px-5 py-3 text-sm font-semibold text-violet-200 transition hover:bg-violet-500/20"
-          >
-            View Signals
-          </Link>
-        </div>
+    <main className="min-h-screen bg-[#080B12] px-4 py-6 text-slate-100 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-7xl">
+        <header className="mb-8 border-b border-[#1B2230] pb-6">
+          <div className="flex items-center gap-2 text-xs font-bold tracking-[0.28em] text-violet-300"><span className="h-2 w-2 rounded-full bg-violet-400" />ALPHA</div>
+          <div className="mt-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-end"><div><p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Market terminal</p><h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Markets</h1><p className="mt-2 text-sm text-slate-500">Explore and search all available prediction markets.</p></div><div className="text-xs text-slate-600">POLYMARKET / LIVE</div></div>
+        </header>
+        <MarketExplorer initialMarkets={markets} />
       </div>
     </main>
   );
